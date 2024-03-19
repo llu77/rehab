@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Statistics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333333;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+            color: #555555;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        input[type="password"] {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            color: #333333;
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="6"><path d="M6 0L0 6h12z" fill="%23333333"/></svg>') no-repeat right 0.75rem center/8px 10px;
+            padding-right: 1.5rem;
+        }
+
+        button {
+            width: 100%;
+            background-color: #4caf50;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+
+        .signature {
+            text-align: center;
+            font-size: 14px;
+            color: #999999;
+            margin-top: 20px;
+        }
+
+        .password-form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data Statistics</h1>
+    <div class="container">
+        <form id="passwordForm" class="password-form">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Submit</button>
+            <p class="error" id="passwordError" style="display: none;">Error: Invalid password. Please try again.</p>
+        </form>
+        <form id="patientForm" style="display: none;">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required>
+            
+            <label for="age">Age:</label>
+            <select id="age" name="age" required>
+                <option value="">Select Age</option>
+                <option value="0-3">0-3</option>
+                <option value="4-7">4-7</option>
+                <option value="8-11">8-11</option>
+                <option value=">11">&gt;11</option>
+            </select>
+            
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            
+            <label for="diagnosis">Diagnosis:</label>
+            <select id="diagnosis" name="diagnosis" required>
+                <option value="">Select Diagnosis</option>
+                <option value="GDD">GDD</option>
+                <option value="CP">CP</option>
+                <option value="BURN">BURN</option>
+                <option value="BELL PALSY">BELL PALSY</option>
+                <option value="ERBS PALSY">ERBS PALSY</option>
+                <option value="ORTHOPEDIC CASE">ORTHOPEDIC CASE</option>
+                <option value="DEVELOPMENTAL DELAY">DEVELOPMENTAL DELAY</option>
+                <option value="DOWN SYNDROM">DOWN SYNDROM</option>
+                <option value="OTHER SYNDROMS">OTHER SYNDROMS</option>
+                <option value="OTHER NEURO CASES">OTHER NEURO CASES</option>
+                <option value="ENCEPHALITIS">ENCEPHALITIS</option>
+                <option value="HAND INJURIES">HAND INJURIES</option>
+            </select>
+            
+            <label for="status">Status:</label>
+            <select id="status" name="status" required>
+                <option value="">Select Status</option>
+                <option value="New">New</option>
+                <option value="Exit">Exit</option>
+                <option value="Follow-up">Follow-up</option>
+            </select>
+            
+            <button type="submit">Submit</button>
+        </form>
+        <p class="signature">Omar AlMutairi</p>
+    </div>
+
+    <script>
+        document.getElementById("passwordForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // منع إرسال النموذج
+            var password = document.getElementById("password").value;
+            var passwordError = document.getElementById("passwordError");
+            // هنا يمكنك مقارنة كلمة المرور المدخلة بالصحيحة
+            if (password === "1010109") {
+                document.getElementById("passwordForm").style.display = "none";
+                document.getElementById("patientForm").style.display = "block";
+                passwordError.style.display = "none"; // إخفاء رسالة الخطأ إذا تم عرضها
+            } else {
+                passwordError.style.display = "block"; // عرض رسالة الخطأ
+            }
+        });
+
+        document.getElementById("patientForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // منع إرسال النموذج
+            
+            // الحصول على بيانات النموذج
+            var formData = new FormData(event.target);
+            
+            // تحويل بيانات النموذج إلى كائن
+            var patientData = {};
+            formData.forEach(function(value, key){
+                patientData[key] = value;
+            });
+            
+            // تسجيل بيانات المريض (يمكنك إرسالها إلى الخادم أو معالجتها بشكل أدق)
+            console.log(patientData);
+        });
+    </script>
+</body>
+</html>
+
